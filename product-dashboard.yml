@@ -1,11 +1,27 @@
 server:
   port: 8082
- 
+
 spring:
   application:
     name: product-dashboard
- 
+
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:8761/eureka
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      productClient:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
